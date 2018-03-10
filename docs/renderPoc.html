@@ -96,8 +96,9 @@ function zoomOut(){
   draw();
 }
 
-function rotate(degrees){
+var gn = new GyroNorm();
 
+function rotate(degrees){
   // calculate gyro heading
   gn.init().then(function(){
     gn.start(function(data){
