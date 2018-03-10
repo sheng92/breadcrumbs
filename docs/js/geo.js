@@ -34,6 +34,7 @@ function getLocationUpdate(){
   }
 }
 
+
 function stopLocationUpdate(){
   navigator.geolocation.clearWatch(watchID);
 }
