@@ -2,7 +2,7 @@ currentHeading = {"degrees": 0};
 var zoom = .005;
 var watchID;
 var geoLoc;
-var currentTrip = new Array();
+var currentTrip = [];
 var currentTripSmooth;
 var currentPos = {lat:0, long:0}
 function getXYMercator(screenWidth, screenHeight, latitude, longitude){
@@ -42,7 +42,7 @@ function draw() {
     ctx.translate(canvas.width/2, canvas.height/2);
     ctx.rotate(currentHeading.degrees/180*Math.PI);
     ctx.beginPath();
-    for (var i=0, coord; coord = currentTripSmooth[i]; i++) {
+    for (var i=0, coord; coord = currentTrip[i]; i++) {
       var xy = getXY(canvas.height, canvas.width, currentPos.lat, currentPos.long, coord.lat, coord.long, zoom);
       if (i==0){
         ctx.moveTo(xy.x, xy.y);
@@ -67,7 +67,6 @@ function showLocation(position) {
   currentTrip.push({ lat: latitude, long : longitude });
   currentPos = {lat: latitude, long: longitude};
   dLog.innerHTML = '{"lat":' + latitude + ',"long":' + longitude + "}";
-  currentTripSmooth = simplify(currentTrip, .8, false);
   draw();
 }
 
