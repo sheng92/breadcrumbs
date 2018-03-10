@@ -5,13 +5,20 @@ var geoLoc;
 var currentTrip = [];
 var currentTripSmooth;
 var currentPos = {lat:0, long:0}
-function getXYMercator(screenWidth, screenHeight, latitude, longitude){
-  var x = (longitude+180)*(screenWidth/360)
-  var latRad = latitude*Math.PI/180;
-  var mercN = Math.log(Math.tan((Math.PI/4)+(latRad/2)));
-  var y = (screenHeight/2)-(screenWidth*mercN/(2*Math.PI));
-  return {x:x, y:y}
-}
+var gn = new GyroNorm();
+
+gn.init().then(function(){
+  gn.start(function(data){
+    currentHeading.degrees = data.do.alpha
+    draw();
+  });
+  }).catch(function(e){
+  // Catch if the DeviceOrientation or DeviceMotion is not supported by the browser or device
+  alert(e);
+  currentHeading.degrees += degrees;
+});
+
+
 function getXY(screenHeight, screenWidth, centerLat, centerLong, latitude, longitude, zoom){
   var y = (centerLat - latitude)/zoom * screenWidth;
   var x = (longitude - centerLong)/zoom * screenWidth;
