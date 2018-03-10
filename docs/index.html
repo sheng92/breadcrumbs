@@ -6,13 +6,14 @@
    </head>
    <body>
    
-      <form>
-         <input type="button" onclick="getLocationUpdate();" value="Watch Update"/>
-         <input type="button" onclick="stopLocationUpdate();" value="Stop Update"/>
-      </form>
-      <div id="log">
-      
-      </div>
+      <input type="button" onclick="getLocationUpdate();" value="Watch Update"/>
+      <input type="button" onclick="stopLocationUpdate();" value="Stop Update"/>
+      <input type="button" onclick="zoomIn();" value="Zoom In"/>
+      <input type="button" onclick="zoomOut();" value="Zoom Out"/>
+      <input type="button" onclick="rotate(45);" value="Turn right"/>
+      <input type="button" onclick="rotate(-45);" value="Turn left"/>
+      <div id = "log"></div>
+      <canvas id="canvas" width="150" height="150"></canvas>
       <script type="text/javascript" src="js/geo.js"></script>
    </body>
 </html>
