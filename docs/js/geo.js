@@ -1,15 +1,74 @@
+currentHeading = {"degrees": 0};
+var zoom = .005;
 var watchID;
 var geoLoc;
-var dLog;
 var currentTrip = new Array();
-var currentLocation = {}
+var currentTripSmooth;
+var currentPos = {lat:0, long:0}
+function getXYMercator(screenWidth, screenHeight, latitude, longitude){
+  var x = (longitude+180)*(screenWidth/360)
+  var latRad = latitude*Math.PI/180;
+  var mercN = Math.log(Math.tan((Math.PI/4)+(latRad/2)));
+  var y = (screenHeight/2)-(screenWidth*mercN/(2*Math.PI));
+  return {x:x, y:y}
+}
+function getXY(screenHeight, screenWidth, centerLat, centerLong, latitude, longitude, zoom){
+  var y = (centerLat - latitude)/zoom * screenWidth;
+  var x = (longitude - centerLong)/zoom * screenWidth;
+  return {x:x, y:y}
+}
+
+function zoomIn(){
+  zoom = zoom / 2;
+  draw();
+}
+
+function zoomOut(){
+  zoom = zoom * 2;
+  draw();
+}
+
+function rotate(degrees){
+  currentHeading.degrees += degrees;
+  draw();
+}
+
+function draw() {
+  var canvas = document.getElementById('canvas');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  if (canvas.getContext) {
+    var ctx = canvas.getContext('2d');
+    ctx.translate(canvas.width/2, canvas.height/2);
+    ctx.rotate(currentHeading.degrees/180*Math.PI);
+    ctx.beginPath();
+    for (var i=0, coord; coord = currentTripSmooth[i]; i++) {
+      var xy = getXY(canvas.height, canvas.width, currentPos.lat, currentPos.long, coord.lat, coord.long, zoom);
+      if (i==0){
+        ctx.moveTo(xy.x, xy.y);
+        ctx.arc(xy.x, xy.y, 3, 0, Math.PI*2, true);
+      }
+      else{
+        ctx.lineTo(xy.x, xy.y);
+      }
+    }
+    ctx.stroke();
+    
+    var xy = getXY(canvas.height, canvas.width, currentPos.lat, currentPos.long, currentPos.lat, currentPos.long, zoom);
+    ctx.moveTo(xy.x, xy.y);
+    ctx.arc(xy.x, xy.y, 10, 0, Math.PI*2, true);
+    ctx.stroke();
+  }
+}
 
 function showLocation(position) {
   var latitude = position.coords.latitude;
   var longitude = position.coords.longitude;
-  dLog.insertAdjacentHTML('beforeend', "Latitude : " + latitude + " Longitude: " + longitude+"<br />");
   currentTrip.push({ lat: latitude, long : longitude });
-  currentLocation = {lat: latitude, long: longitude};
+  currentPos = {lat: latitude, long: longitude};
+  dLog.innerHTML = '{"lat":' + latitude + ',"long":' + longitude + "}";
+  currentTripSmooth = simplify(currentTrip, .8, false);
+  draw();
 }
 
 function errorHandler(err) {
@@ -36,7 +95,8 @@ function getLocationUpdate(){
   }
 }
 
-
 function stopLocationUpdate(){
   navigator.geolocation.clearWatch(watchID);
 }
+
+
