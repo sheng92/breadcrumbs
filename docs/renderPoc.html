@@ -103,6 +103,7 @@ function rotate(degrees){
   gn.init().then(function(){
     gn.start(function(data){
       currentHeading.degrees = data.do.alpha
+      draw();
     });
   }).catch(function(e){
     // Catch if the DeviceOrientation or DeviceMotion is not supported by the browser or device
