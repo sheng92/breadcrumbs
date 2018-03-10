@@ -22,11 +22,12 @@
                alert("Error: Position is unavailable!");
             }
          }
-         
+         window.onload = function() {
+             dLog = document.getElementById('log')
+         };
          function getLocationUpdate(){
             if(navigator.geolocation){
                // timeout at 60000 milliseconds (60 seconds)
-               dLog = document.getElementById('log')
                var options = {timeout:60000};
                geoLoc = navigator.geolocation;
                watchID = geoLoc.watchPosition(showLocation, errorHandler, options);
