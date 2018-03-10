@@ -102,10 +102,11 @@ function rotate(degrees){
   // calculate gyro heading
   gn.init().then(function(){
     gn.start(function(data){
-      currentHeading.degrees = data.do.alpha  
+      currentHeading.degrees = data.do.alpha
     });
   }).catch(function(e){
     // Catch if the DeviceOrientation or DeviceMotion is not supported by the browser or device
+    alert(e);
     currentHeading.degrees += degrees;
   });
   draw();
