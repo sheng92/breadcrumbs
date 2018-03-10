@@ -73,7 +73,7 @@ function showLocation(position) {
   currentTrip.push({ lat: latitude, long : longitude });
   currentTripSmooth = simplify(currentTrip, 5, false);
   currentPos = {lat: latitude, long: longitude};
-  dLog.innerHTML = '{"lat":' + latitude + ',"long":' + longitude + "}";
+  dLog.insertAdjacentHTML('beforeend', '{"lat":' + latitude + ',"long":' + longitude + "}");
   draw();
 }
 
