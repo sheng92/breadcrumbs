@@ -1,11 +1,13 @@
 var watchID;
 var geoLoc;
 var dLog;
+var currentTrip = new Array();
 
 function showLocation(position) {
   var latitude = position.coords.latitude;
   var longitude = position.coords.longitude;
   dLog.insertAdjacentHTML('beforeend', "Latitude : " + latitude + " Longitude: " + longitude+"<br />");
+  currentTrip.push({ lat: latitude, long : longitude });
 }
 
 function errorHandler(err) {
