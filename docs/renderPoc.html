@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Test</title>
+  </head>
+  <body onload="draw()">
+  <input type="button" onclick="zoomIn();" value="Zoom In"/>
+  <input type="button" onclick="zoomOut();" value="Zoom Out"/>
+  <input type="button" onclick="rotate(45);" value="Turn right"/>
+  <input type="button" onclick="rotate(-45);" value="Turn left"/>
+  <canvas id="canvas" width="150" height="150"></canvas>
+  <script type="text/javascript">
+  var currentTrip = [{"lat":21.272258489207207,"long":-157.81999957312337},
+{"lat":21.272258489207207,"long":-157.81999957312337},
+{"lat":21.272258489207207,"long":-157.81999957312337},
+{"lat":21.272258489207207,"long":-157.81999957312337},
+{"lat":21.272287215920844,"long":-157.8193211418624},
+{"lat":21.272415799076864,"long":-157.8189271720366},
+{"lat":21.27231487273342,"long":-157.81904074592381},
+{"lat":21.27228130008634,"long":-157.81914238923466},
+{"lat":21.273209776383183,"long":-157.8171260126163},
+{"lat":21.273589318449744,"long":-157.81669489760816},
+{"lat":21.273677307868528,"long":-157.81667338131052},
+{"lat":21.27378108147792,"long":-157.81679121381634},
+{"lat":21.273560791768183,"long":-157.81663038766234},
+{"lat":21.273808612007084,"long":-157.8165987598723},
+{"lat":21.274059300137065,"long":-157.81648823699658},
+{"lat":21.274293154489904,"long":-157.81685274287838},
+{"lat":21.27450190575053,"long":-157.81618102237024},
+{"lat":21.274765753191957,"long":-157.81593249687285},
+{"lat":21.275219862395556,"long":-157.81566826922995},
+{"lat":21.275772054621044,"long":-157.81516965570665},
+{"lat":21.276156533125242,"long":-157.81491450705684},
+{"lat":21.276964863357083,"long":-157.81442805436993},
+{"lat":21.27725278118135,"long":-157.81422387538112},
+{"lat":21.277481343160495,"long":-157.81415932492166},
+{"lat":21.277498877634315,"long":-157.81416424511997},
+{"lat":21.2774907586459,"long":-157.8141664402158},
+{"lat":21.277491636793044,"long":-157.81416661317968},
+{"lat":21.277498984300422,"long":-157.81417461396808},
+{"lat":21.27840312041796,"long":-157.81380471116242},
+{"lat":21.278514470292414,"long":-157.8138379634072},
+{"lat":21.278842984698464,"long":-157.81391784602891},
+{"lat":21.2792385115166,"long":-157.81386628256578},
+{"lat":21.279767969341655,"long":-157.81385495209315},
+{"lat":21.280347314679464,"long":-157.8140425860147},
+{"lat":21.280840774604044,"long":-157.81414967088992},
+{"lat":21.28120531777017,"long":-157.81417883249048},
+{"lat":21.281248045105624,"long":-157.81410789785465},
+{"lat":21.28144454755147,"long":-157.814242710538},
+{"lat":21.281974930689007,"long":-157.8141936344412},
+{"lat":21.28304796706286,"long":-157.8140372533402},
+{"lat":21.283842818874938,"long":-157.81394758863206},
+{"lat":21.28371575948521,"long":-157.81398711785488},
+{"lat":21.28390025811033,"long":-157.81399707611038},
+{"lat":21.284468942272515,"long":-157.81353006577697},
+{"lat":21.28507741788151,"long":-157.81350510987045},
+{"lat":21.2855051024727,"long":-157.8134799637917},
+{"lat":21.285433616359946,"long":-157.81345760573998},
+{"lat":21.28530265552735,"long":-157.81342279430942},
+{"lat":21.285538036629642,"long":-157.81342986101052},
+{"lat":21.285539743909546,"long":-157.8134297994274},
+{"lat":21.28558636907417,"long":-157.81342269391766},
+{"lat":21.28554273064836,"long":-157.81347538485716},
+{"lat":21.285497190881596,"long":-157.81346291868982},
+{"lat":21.285948961881562,"long":-157.81338555360446},
+{"lat":21.28617070052441,"long":-157.81332262387778},
+{"lat":21.286792107320835,"long":-157.81294705908186},
+{"lat":21.28734117989074,"long":-157.81303759267385}];
+currentPos = {"lat":21.28554273064836,"long":-157.81347538485716};
+currentHeading = {"degrees": 0};
+var zoom = .05;
+function getXYMercator(screenWidth, screenHeight, latitude, longitude){
+  x = (longitude+180)*(screenWidth/360)
+  latRad = latitude*Math.PI/180;
+  mercN = Math.log(Math.tan((Math.PI/4)+(latRad/2)));
+  y = (screenHeight/2)-(screenWidth*mercN/(2*Math.PI));
+  return {x:x, y:y}
+}
+function getXY(screenHeight, screenWidth, centerLat, centerLong, latitude, longitude, zoom){
+  y = (centerLat - latitude)/zoom * screenWidth;
+  x = (longitude - centerLong)/zoom * screenWidth;
+  return {x:x, y:y}
+}
+
+function zoomIn(){
+  zoom = zoom / 2;
+  draw();
+}
+
+function zoomOut(){
+  zoom = zoom * 2;
+  draw();
+}
+
+function rotate(degrees){
+  currentHeading.degrees += degrees;
+  draw();
+}
+
+function draw() {
+  var canvas = document.getElementById('canvas');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  if (canvas.getContext) {
+    var ctx = canvas.getContext('2d');
+    ctx.translate(canvas.width/2, canvas.height/2);
+    ctx.rotate(currentHeading.degrees/180*Math.PI);
+    ctx.beginPath();
+    for (var i=0, coord; coord = currentTrip[i]; i++) {
+      xy = getXY(canvas.height, canvas.width, currentPos.lat, currentPos.long, coord.lat, coord.long, zoom);
+      if (i==0){
+        ctx.moveTo(xy.x, xy.y);
+        ctx.arc(xy.x, xy.y, 3, 0, Math.PI*2, true);
+      }
+      else{
+        ctx.lineTo(xy.x, xy.y);
+      }
+    }
+    
+    xy = getXY(canvas.height, canvas.width, currentPos.lat, currentPos.long, currentPos.lat, currentPos.long, zoom);
+    ctx.moveTo(xy.x, xy.y);
+    ctx.arc(xy.x, xy.y, 10, 0, Math.PI*2, true);
+    ctx.stroke();
+  }
+}
+  </script>
+  </body>
+</html>
