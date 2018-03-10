@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Test</title>
+  </head>
+  <body onload="draw()">
+  <input type="button" onclick="getLocationUpdate();" value="Watch Update"/>
+  <input type="button" onclick="stopLocationUpdate();" value="Stop Update"/>
+  <input type="button" onclick="zoomIn();" value="Zoom In"/>
+  <input type="button" onclick="zoomOut();" value="Zoom Out"/>
+  <input type="button" onclick="rotate(45);" value="Turn right"/>
+  <input type="button" onclick="rotate(-45);" value="Turn left"/>
+  <canvas id="canvas" width="150" height="150"></canvas>
+  <script type="text/javascript">
+currentHeading = {"degrees": 0};
+var zoom = .05;
+function getXYMercator(screenWidth, screenHeight, latitude, longitude){
+  x = (longitude+180)*(screenWidth/360)
+  latRad = latitude*Math.PI/180;
+  mercN = Math.log(Math.tan((Math.PI/4)+(latRad/2)));
+  y = (screenHeight/2)-(screenWidth*mercN/(2*Math.PI));
+  return {x:x, y:y}
+}
+function getXY(screenHeight, screenWidth, centerLat, centerLong, latitude, longitude, zoom){
+  y = (centerLat - latitude)/zoom * screenWidth;
+  x = (longitude - centerLong)/zoom * screenWidth;
+  return {x:x, y:y}
+}
+
+function zoomIn(){
+  zoom = zoom / 2;
+  draw();
+}
+
+function zoomOut(){
+  zoom = zoom * 2;
+  draw();
+}
+
+function rotate(degrees){
+  currentHeading.degrees += degrees;
+  draw();
+}
+
+function draw() {
+  var canvas = document.getElementById('canvas');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  if (canvas.getContext) {
+    var ctx = canvas.getContext('2d');
+    ctx.translate(canvas.width/2, canvas.height/2);
+    ctx.rotate(currentHeading.degrees/180*Math.PI);
+    ctx.beginPath();
+    for (var i=0, coord; coord = currentTrip[i]; i++) {
+      xy = getXY(canvas.height, canvas.width, currentPos.lat, currentPos.long, coord.lat, coord.long, zoom);
+      if (i==0){
+        ctx.moveTo(xy.x, xy.y);
+        ctx.arc(xy.x, xy.y, 3, 0, Math.PI*2, true);
+      }
+      else{
+        ctx.lineTo(xy.x, xy.y);
+      }
+    }
+    
+    xy = getXY(canvas.height, canvas.width, currentPos.lat, currentPos.long, currentPos.lat, currentPos.long, zoom);
+    ctx.moveTo(xy.x, xy.y);
+    ctx.arc(xy.x, xy.y, 10, 0, Math.PI*2, true);
+    ctx.stroke();
+  }
+}
+
+var watchID;
+var geoLoc;
+var currentTrip = new Array();
+var currentLocation = {}
+
+function showLocation(position) {
+  var latitude = position.coords.latitude;
+  var longitude = position.coords.longitude;
+  currentTrip.push({ lat: latitude, long : longitude });
+  currentLocation = {lat: latitude, long: longitude};
+}
+
+function errorHandler(err) {
+  if(err.code == 1) {
+     alert("Error: Access is denied!");
+  }
+
+  else if( err.code == 2) {
+     alert("Error: Position is unavailable!");
+  }
+}
+
+function getLocationUpdate(){
+  if(navigator.geolocation){
+     // timeout at 60000 milliseconds (60 seconds)
+     var options = {timeout:60000};
+     dLog = document.getElementById('log')
+     geoLoc = navigator.geolocation;
+     watchID = geoLoc.watchPosition(showLocation, errorHandler, options);
+  }
+
+  else{
+     alert("Sorry, browser does not support geolocation!");
+  }
+}
+
+  </script>
+  </body>
+</html>
