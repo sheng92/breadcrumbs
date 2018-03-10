@@ -71,7 +71,7 @@ function showLocation(position) {
   var latitude = position.coords.latitude * 1000000;
   var longitude = position.coords.longitude * 1000000;
   currentTrip.push({ lat: latitude, long : longitude });
-  currentTripSmooth = simplify(currentTrip, .8, false);
+  currentTripSmooth = simplify(currentTrip, 5, false);
   currentPos = {lat: latitude, long: longitude};
   dLog.innerHTML = '{"lat":' + latitude + ',"long":' + longitude + "}";
   draw();
