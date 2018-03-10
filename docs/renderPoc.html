@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
+  <script src="js/gyronorm.complete.min.js"></script>
     <title>Test</title>
   </head>
   <body onload="draw()">
@@ -96,7 +97,16 @@ function zoomOut(){
 }
 
 function rotate(degrees){
-  currentHeading.degrees += degrees;
+
+  // calculate gyro heading
+  gn.init().then(function(){
+    gn.start(function(data){
+      currentHeading.degrees = data.do.alpha  
+    });
+  }).catch(function(e){
+    // Catch if the DeviceOrientation or DeviceMotion is not supported by the browser or device
+    currentHeading.degrees += degrees;
+  });
   draw();
 }
 
