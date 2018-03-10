@@ -5,7 +5,7 @@
       <script type="text/javascript">
          var watchID;
          var geoLoc;
-         var dLog = document.getElementById('log');
+         var dLog;
          
          function showLocation(position) {
             var latitude = position.coords.latitude;
@@ -26,6 +26,7 @@
          function getLocationUpdate(){
             if(navigator.geolocation){
                // timeout at 60000 milliseconds (60 seconds)
+               dLog = document.getElementById('log')
                var options = {timeout:60000};
                geoLoc = navigator.geolocation;
                watchID = geoLoc.watchPosition(showLocation, errorHandler, options);
