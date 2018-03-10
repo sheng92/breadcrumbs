@@ -16,6 +16,10 @@
   <script type="text/javascript">
 currentHeading = {"degrees": 0};
 var zoom = .05;
+var watchID;
+var geoLoc;
+var currentTrip = new Array();
+var currentPos = {lat:0, long:0}
 function getXYMercator(screenWidth, screenHeight, latitude, longitude){
   x = (longitude+180)*(screenWidth/360)
   latRad = latitude*Math.PI/180;
@@ -71,16 +75,12 @@ function draw() {
   }
 }
 
-var watchID;
-var geoLoc;
-var currentTrip = new Array();
-var currentLocation = {}
-
 function showLocation(position) {
   var latitude = position.coords.latitude;
   var longitude = position.coords.longitude;
   currentTrip.push({ lat: latitude, long : longitude });
-  currentLocation = {lat: latitude, long: longitude};
+  currentPos = {lat: latitude, long: longitude};
+  draw();
 }
 
 function errorHandler(err) {
