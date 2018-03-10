@@ -21,15 +21,15 @@ var geoLoc;
 var currentTrip = new Array();
 var currentPos = {lat:0, long:0}
 function getXYMercator(screenWidth, screenHeight, latitude, longitude){
-  x = (longitude+180)*(screenWidth/360)
-  latRad = latitude*Math.PI/180;
-  mercN = Math.log(Math.tan((Math.PI/4)+(latRad/2)));
-  y = (screenHeight/2)-(screenWidth*mercN/(2*Math.PI));
+  var x = (longitude+180)*(screenWidth/360)
+  var latRad = latitude*Math.PI/180;
+  var mercN = Math.log(Math.tan((Math.PI/4)+(latRad/2)));
+  var y = (screenHeight/2)-(screenWidth*mercN/(2*Math.PI));
   return {x:x, y:y}
 }
 function getXY(screenHeight, screenWidth, centerLat, centerLong, latitude, longitude, zoom){
-  y = (centerLat - latitude)/zoom * screenWidth;
-  x = (longitude - centerLong)/zoom * screenWidth;
+  var y = (centerLat - latitude)/zoom * screenWidth;
+  var x = (longitude - centerLong)/zoom * screenWidth;
   return {x:x, y:y}
 }
 
