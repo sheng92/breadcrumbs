@@ -12,10 +12,11 @@
   <input type="button" onclick="zoomOut();" value="Zoom Out"/>
   <input type="button" onclick="rotate(45);" value="Turn right"/>
   <input type="button" onclick="rotate(-45);" value="Turn left"/>
+  <div id = "log"></div>
   <canvas id="canvas" width="150" height="150"></canvas>
   <script type="text/javascript">
 currentHeading = {"degrees": 0};
-var zoom = .05;
+var zoom = .005;
 var watchID;
 var geoLoc;
 var currentTrip = new Array();
@@ -58,7 +59,7 @@ function draw() {
     ctx.rotate(currentHeading.degrees/180*Math.PI);
     ctx.beginPath();
     for (var i=0, coord; coord = currentTrip[i]; i++) {
-      xy = getXY(canvas.height, canvas.width, currentPos.lat, currentPos.long, coord.lat, coord.long, zoom);
+      var xy = getXY(canvas.height, canvas.width, currentPos.lat, currentPos.long, coord.lat, coord.long, zoom);
       if (i==0){
         ctx.moveTo(xy.x, xy.y);
         ctx.arc(xy.x, xy.y, 3, 0, Math.PI*2, true);
@@ -68,7 +69,7 @@ function draw() {
       }
     }
     
-    xy = getXY(canvas.height, canvas.width, currentPos.lat, currentPos.long, currentPos.lat, currentPos.long, zoom);
+    var xy = getXY(canvas.height, canvas.width, currentPos.lat, currentPos.long, currentPos.lat, currentPos.long, zoom);
     ctx.moveTo(xy.x, xy.y);
     ctx.arc(xy.x, xy.y, 10, 0, Math.PI*2, true);
     ctx.stroke();
@@ -80,6 +81,7 @@ function showLocation(position) {
   var longitude = position.coords.longitude;
   currentTrip.push({ lat: latitude, long : longitude });
   currentPos = {lat: latitude, long: longitude};
+  dLog.innerHTML = '{"lat":' + latitude + ',"long":' + longitude + "}";
   draw();
 }
 
@@ -106,6 +108,11 @@ function getLocationUpdate(){
      alert("Sorry, browser does not support geolocation!");
   }
 }
+
+function stopLocationUpdate(){
+  navigator.geolocation.clearWatch(watchID);
+}
+
 
   </script>
   </body>
