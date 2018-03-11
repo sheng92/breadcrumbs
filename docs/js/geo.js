@@ -1,5 +1,5 @@
 var currentHeading = {"degrees": 0};
-var zoom = 20000;
+var zoom = 50000;
 var watchID;
 var geoLoc;
 var currentTrip = [];
@@ -50,10 +50,10 @@ function draw() {
     for (var i=0, coord; coord = currentTripSmooth[i]; i++) {
       var xy = getXY(canvas.height, canvas.width, currentPos.lat, currentPos.long, coord.lat, coord.long, zoom);
       if (i==0){
-        ctx.moveTo(xy.x+6, xy.y);
-        ctx.arc(xy.x, xy.y, 6, 0, Math.PI*2, true);
+        ctx.moveTo(xy.x+12, xy.y);
+        ctx.arc(xy.x, xy.y, 12, 0, Math.PI*2, true);
         ctx.strokeStyle="#009900";
-        ctx.lineWidth=10;
+        ctx.lineWidth=20;
         ctx.stroke();
         ctx.beginPath();
         ctx.moveTo(xy.x, xy.y);
@@ -63,14 +63,14 @@ function draw() {
       }
     }
     ctx.strokeStyle="#8a130f";
-    ctx.lineWidth=4;
+    ctx.lineWidth=8;
     ctx.stroke();
     
     var xy = getXY(canvas.height, canvas.width, currentPos.lat, currentPos.long, currentPos.lat, currentPos.long, zoom);
     ctx.beginPath();
-    ctx.lineWidth=10;
-    ctx.moveTo(xy.x+20, xy.y);
-    ctx.arc(xy.x, xy.y, 20, 0, Math.PI*2, true);
+    ctx.lineWidth=20;
+    ctx.moveTo(xy.x+40, xy.y);
+    ctx.arc(xy.x, xy.y, 40, 0, Math.PI*2, true);
     ctx.stroke();
   }
 }
