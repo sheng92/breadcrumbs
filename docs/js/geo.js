@@ -48,17 +48,19 @@ function draw() {
     for (var i=0, coord; coord = currentTripSmooth[i]; i++) {
       var xy = getXY(canvas.height, canvas.width, currentPos.lat, currentPos.long, coord.lat, coord.long, zoom);
       if (i==0){
-        ctx.moveTo(xy.x, xy.y);
+        ctx.moveTo(xy.x+3, xy.y);
         ctx.arc(xy.x, xy.y, 3, 0, Math.PI*2, true);
+        ctx.moveTo(xy.x, xy.y);
       }
       else{
         ctx.lineTo(xy.x, xy.y);
       }
     }
+    ctx.strokeStyle="#ec5d57";
     ctx.stroke();
     
     var xy = getXY(canvas.height, canvas.width, currentPos.lat, currentPos.long, currentPos.lat, currentPos.long, zoom);
-    ctx.moveTo(xy.x, xy.y);
+    ctx.moveTo(xy.x+10, xy.y);
     ctx.arc(xy.x, xy.y, 10, 0, Math.PI*2, true);
     ctx.stroke();
   }
