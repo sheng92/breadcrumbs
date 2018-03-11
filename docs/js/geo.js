@@ -76,6 +76,8 @@ function draw() {
   }
   if (arrowCanvas.getContext){
     nextNode = getNearest();
+    arrowCanvas.width = window.innerWidth*.25;
+    arrowCanvas.height = window.innerHeight*.25;
     var arrowCtx = arrowCanvas.getContext('2d');
     var xy = getXY(arrowCanvas.height, arrowCanvas.width, currentPos.lat, currentPos.long, nextNode.lat, nextNode.long, zoom);
     arrowCtx.translate(arrowCanvas.width/2, arrowCanvas.height/2);
