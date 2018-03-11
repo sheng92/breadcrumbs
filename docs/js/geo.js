@@ -50,11 +50,11 @@ function draw() {
       if (i==0){
         ctx.moveTo(xy.x+3, xy.y);
         ctx.arc(xy.x, xy.y, 3, 0, Math.PI*2, true);
-        ctx.moveTo(xy.x, xy.y);
         ctx.strokeStyle="#009900";
         ctx.lineWidth=5;
         ctx.stroke();
         ctx.beginPath();
+        ctx.moveTo(xy.x, xy.y);
       }
       else{
         ctx.lineTo(xy.x, xy.y);
