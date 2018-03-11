@@ -8,7 +8,7 @@ var currentPos = {lat:0, long:0}
 var trackingTrip = true;
 
 Compass.watch(function (heading) {
-  currentHeading.degrees = heading;
+  currentHeading.degrees = 360-heading;
   draw();
 });
 
