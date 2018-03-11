@@ -40,8 +40,8 @@ function rotate(degrees){
 
 function draw() {
   var canvas = document.getElementById('canvas');
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+  canvas.width = window.innerWidth*.9;
+  canvas.height = window.innerHeight*.5;
   if (canvas.getContext) {
     var ctx = canvas.getContext('2d');
     ctx.translate(canvas.width/2, canvas.height/2);
@@ -83,7 +83,9 @@ function showLocation(position) {
     currentTripSmooth = simplify(currentTrip, 50, false);
   }
   currentPos = {lat: latitude, long: longitude};
-  dLog.insertAdjacentHTML('beforeend', '{"lat":' + latitude + ',"long":' + longitude + "}");
+  if (dLog){
+    dLog.insertAdjacentHTML('beforeend', '{"lat":' + latitude + ',"long":' + longitude + "}");
+  }
   draw();
 }
 

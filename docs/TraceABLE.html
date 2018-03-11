@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <title>My Title</title>
+        <link rel="stylesheet" type="text/css" href="css/TraceABLE.css">
+    </head>
+
+    <body>
+        <img src="image/logo.jpg" id="logo_image">
+        <h1>TraceABLE</h1>
+        <img src="image/menu_image" id="menu_image">
+        <br><br><br><br>
+        <!-- <input type="button" onclick="getLocationUpdate();" value="Start Trip"/> -->
+      <!-- <input type="button" onclick="stopTrip();" value="End Trip"/> -->
+      <!-- <input type="button" onclick="stopLocationUpdate();" value="Stop Tracking"/> -->
+      <!-- <input type="button" onclick="zoomIn();" value="Zoom In"/> -->
+      <!-- <input type="button" onclick="zoomOut();" value="Zoom Out"/> -->
+        <button class="controls" id="record" onclick="getLocationUpdate();"><img src="image/record_sign" id="record_sign">Record</button>
+        <button class="controls" id="pause" onclick="stopTrip();"><img src="image/vertical_bars.png" id="pause_sign"></button>
+        <br><br><br><br>
+        <div id="map_window"><canvas id="canvas" width="150" height="150"></canvas></div>
+        <br><br>
+        <button id="exit_button">Done</button>
+        <script src="js/compass.js"></script>
+        <script src="js/simplify.js"></script>
+        <script type="text/javascript" src="js/geo.js"></script>
+    </body>
+    
+</html>

@@ -1,0 +1,82 @@
+html {
+    background-color:white;
+    text-align:center;
+}
+
+#logo_image {
+    display:inline-block;
+    height:20vw;
+    float:left;
+}
+
+
+h1 {
+    display:inline-block;
+    float:left;
+    font-family:sans-serif;
+    color:mediumaquamarine;
+    font-size:8vw;
+}
+
+
+#menu_image {
+    height:20vw;
+    float:right;
+    opacity:.5
+}
+
+
+button {
+    border-style:none;
+}
+
+
+.controls {
+    height:10vw;
+    border-radius:25px;
+    background-color:mediumaquamarine;
+    color:white;
+    font-size:4vw;
+}
+
+
+#record {
+    float:left;
+    width:77.5%
+}
+
+
+#record_sign {
+    height:3vw;
+    margin-right:3%;
+}
+
+#pause {
+    float:right;
+    width:20%;
+}
+
+
+#pause_sign {
+    height:5vw;
+    margin-top:7%
+}
+
+
+#map_window {
+    height:50vh;
+    width:97.5%;
+    margin:auto;
+    border: 2px solid black;
+}
+
+
+#exit_button {
+    height:10vw;
+    width:97.5%;
+    border-radius:25px;
+    background-color:mediumaquamarine;
+    color:white;
+    font-size:4vw;
+}
+
