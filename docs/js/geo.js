@@ -82,11 +82,11 @@ function draw() {
     var arrowXY = getXY(arrowCanvas.height, arrowCanvas.width, currentPos.lat, currentPos.long, nextNode.lat, nextNode.long, zoom);
     arrowCtx.translate(arrowCanvas.width/2, arrowCanvas.height/2);
     arrowCtx.rotate(currentHeading.degrees/180*Math.PI);
-    arrowCtx.moveTo(0,0);
+    arrowCtx.moveTo(10,0);
     if (Math.abs(arrowXY.x)+Math.abs(arrowXY.y)>0){
+      arrowCtx.arc(0,0,10,0,Math.PI*2,true);
       arrowCtx.lineTo(arrowXY.x/(Math.sqrt((arrowXY.x*arrowXY.x+arrowXY.y*arrowXY.y)))*50, arrowXY.y/(Math.sqrt((arrowXY.x*arrowXY.x+arrowXY.y*arrowXY.y)))*50);
       arrowCtx.lineWidth = 10;
-      arrowCtx.arc(arrowXY.x/(Math.sqrt((arrowXY.x*arrowXY.x+arrowXY.y*arrowXY.y)))*50, arrowXY.y/(Math.sqrt((arrowXY.x*arrowXY.x+arrowXY.y*arrowXY.y)))*50, 10,0, Math.PI*2,true);
       arrowCtx.stroke();
     }
   }
