@@ -79,14 +79,14 @@ function draw() {
     arrowCanvas.width = window.innerWidth*.25;
     arrowCanvas.height = window.innerHeight*.25;
     var arrowCtx = arrowCanvas.getContext('2d');
-    var xy = getXY(arrowCanvas.height, arrowCanvas.width, currentPos.lat, currentPos.long, nextNode.lat, nextNode.long, zoom);
+    var arrowXY = getXY(arrowCanvas.height, arrowCanvas.width, currentPos.lat, currentPos.long, nextNode.lat, nextNode.long, zoom);
     arrowCtx.translate(arrowCanvas.width/2, arrowCanvas.height/2);
     arrowCtx.rotate(currentHeading.degrees/180*Math.PI);
     arrowCtx.moveTo(0,0);
-    if (Math.abs(xy.x)+Math.abs(xy.y)>0){
-      arrowCtx.lineTo(xy.x/(Math.sqrt((xy.x*xy.x+xy.y*xy.y)))*50, xy.y/(Math.sqrt((xy.x*xy.x+xy.y*xy.y)))*50);
+    if (Math.abs(arrowXY.x)+Math.abs(arrowXY.y)>0){
+      arrowCtx.lineTo(arrowXY.x/(Math.sqrt((arrowXY.x*arrowXY.x+arrowXY.y*arrowXY.y)))*50, arrowXY.y/(Math.sqrt((arrowXY.x*arrowXY.x+arrowXY.y*arrowXY.y)))*50);
       arrowCtx.lineWidth = 10;
-      arrowCtx.arc(xy.x/(Math.sqrt((xy.x*xy.x+xy.y*xy.y)))*50, xy.y/(Math.sqrt((xy.x*xy.x+xy.y*xy.y)))*50, 10,0, Math.PI*2,true);
+      arrowCtx.arc(arrowXY.x/(Math.sqrt((arrowXY.x*arrowXY.x+arrowXY.y*arrowXY.y)))*50, arrowXY.y/(Math.sqrt((arrowXY.x*arrowXY.x+arrowXY.y*arrowXY.y)))*50, 10,0, Math.PI*2,true);
       arrowCtx.stroke();
     }
   }
