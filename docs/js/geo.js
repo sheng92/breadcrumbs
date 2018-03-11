@@ -5,9 +5,11 @@ var geoLoc;
 var currentTrip = [];
 var currentTripSmooth;
 var currentPos = {lat:0, long:0}
+var trackingTrip = true;
 
 Compass.watch(function (heading) {
   currentHeading.degrees = heading;
+  draw();
 });
 
 Compass.init(function (method) {
@@ -76,8 +78,10 @@ function draw() {
 function showLocation(position) {
   var latitude = position.coords.latitude * 1000000;
   var longitude = position.coords.longitude * 1000000;
-  currentTrip.push({ lat: latitude, long : longitude });
-  currentTripSmooth = simplify(currentTrip, 50, false);
+  if (trackingTrip) {
+    currentTrip.push({ lat: latitude, long : longitude });
+    currentTripSmooth = simplify(currentTrip, 50, false);
+  }
   currentPos = {lat: latitude, long: longitude};
   dLog.insertAdjacentHTML('beforeend', '{"lat":' + latitude + ',"long":' + longitude + "}");
   draw();
@@ -94,6 +98,7 @@ function errorHandler(err) {
 }
 
 function getLocationUpdate(){
+  trackingTrip = true;
   if(navigator.geolocation){
      // timeout at 60000 milliseconds (60 seconds)
      var options = {timeout:60000};
@@ -111,4 +116,6 @@ function stopLocationUpdate(){
   navigator.geolocation.clearWatch(watchID);
 }
 
-
+function stopTrip() {
+  trackingTrip = false;
+}
