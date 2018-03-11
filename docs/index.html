@@ -21,8 +21,8 @@
         <button class="controls" id="record" onclick="getLocationUpdate();"><img src="image/record_sign" id="record_sign">Record</button>
         <button class="controls" id="pause" onclick="pauseTrip();"><img src="image/vertical_bars.png" id="pause_sign"></button>
         <br><br><br><br>
-        <div id="map_window"><canvas id="canvas" width="150" height="150"></canvas></div>
-        <br><br>
+        <div id="map_window"><canvas id="mainCanvas" width="150" height="150"></canvas></div>
+        <canvas id="arrowCanvas" width="150" height="150"></canvas>
         <button class="controls zoom" id="zoomIn" type="button" onclick="zoomIn();" value="Zoom In"/>+</button>
         <button class="controls zoom" id="zoomOut" type="button" onclick="zoomOut();" value="Zoom Out"/>-</button>
         <button id="exit_button">Done</button>

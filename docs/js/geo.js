@@ -39,7 +39,8 @@ function rotate(degrees){
 }
 
 function draw() {
-  var canvas = document.getElementById('canvas');
+  var canvas = document.getElementById('mainCanvas');
+  var arrowCanvas = document.getElementById('arrowCanvas');
   canvas.width = window.innerWidth*.9;
   canvas.height = window.innerHeight*.5;
   if (canvas.getContext) {
@@ -72,6 +73,20 @@ function draw() {
     ctx.moveTo(xy.x+40, xy.y);
     ctx.arc(xy.x, xy.y, 40, 0, Math.PI*2, true);
     ctx.stroke();
+  }
+  if (arrowCanvas.getContext){
+    nextNode = getNearest();
+    var arrowCtx = arrowCanvas.getContext('2d');
+    var xy = getXY(arrowCanvas.height, arrowCanvas.width, currentPos.lat, currentPos.long, nextNode.lat, nextNode.long, zoom);
+    arrowCtx.translate(arrowCanvas.width/2, arrowCanvas.height/2);
+    arrowCtx.rotate(currentHeading.degrees/180*Math.PI);
+    arrowCtx.moveTo(0,0);
+    if (Math.abs(xy.x)+Math.abs(xy.y)>0){
+      arrowCtx.lineTo(xy.x/(Math.sqrt((xy.x*xy.x+xy.y*xy.y)))*50, xy.y/(Math.sqrt((xy.x*xy.x+xy.y*xy.y)))*50);
+      arrowCtx.lineWidth = 10;
+      arrowCtx.arc(xy.x/(Math.sqrt((xy.x*xy.x+xy.y*xy.y)))*50, xy.y/(Math.sqrt((xy.x*xy.x+xy.y*xy.y)))*50, 10,0, Math.PI*2,true);
+      arrowCtx.stroke();
+    }
   }
 }
 
@@ -120,4 +135,16 @@ function stopLocationUpdate(){
 
 function pauseTrip() {
   trackingTrip = !trackingTrip;
+}
+
+
+function getNearest() {
+  recentTrip = currentTripSmooth.slice(- 5);
+  var x = 0;
+  var y = 0;
+  for (var i=0, coord; coord = recentTrip[i]; i++) {
+    x += coord.x/recentTrip.length;
+    y += coord.y/recentTrip.length;
+  }
+  return {lat:x,long:y};
 }
