@@ -142,11 +142,11 @@ function pauseTrip() {
 
 function getNearest() {
   recentTrip = currentTripSmooth.slice(- 5);
-  var x = 0;
-  var y = 0;
+  var lat = 0;
+  var long = 0;
   for (var i=0, coord; coord = recentTrip[i]; i++) {
-    x += coord.x/recentTrip.length;
-    y += coord.y/recentTrip.length;
+    lat += coord.lat/recentTrip.length;
+    long += coord.long/recentTrip.length;
   }
-  return {lat:x,long:y};
+  return {lat:lat,long:long};
 }
