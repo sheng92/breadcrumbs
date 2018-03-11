@@ -85,6 +85,7 @@ function draw() {
     arrowCtx.moveTo(10,0);
     if (Math.abs(arrowXY.x)+Math.abs(arrowXY.y)>0){
       arrowCtx.arc(0,0,10,0,Math.PI*2,true);
+      arrowCtx.moveTo(0,0);
       arrowCtx.lineTo(arrowXY.x/(Math.sqrt((arrowXY.x*arrowXY.x+arrowXY.y*arrowXY.y)))*50, arrowXY.y/(Math.sqrt((arrowXY.x*arrowXY.x+arrowXY.y*arrowXY.y)))*50);
       arrowCtx.lineWidth = 10;
       arrowCtx.stroke();
