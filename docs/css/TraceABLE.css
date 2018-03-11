@@ -83,7 +83,7 @@ button {
 .zoom {
   float:right;
   clear:both;
-  min-width:10%;
+  min-width:100px;
   margin-right:20px;
 }
 
