@@ -61,10 +61,12 @@ function draw() {
       }
     }
     ctx.strokeStyle="#8a130f";
-    ctx.lineWidth=5;
+    ctx.lineWidth=2;
     ctx.stroke();
     
     var xy = getXY(canvas.height, canvas.width, currentPos.lat, currentPos.long, currentPos.lat, currentPos.long, zoom);
+    ctx.beginPath();
+    ctx.lineWidth=5;
     ctx.moveTo(xy.x+10, xy.y);
     ctx.arc(xy.x, xy.y, 10, 0, Math.PI*2, true);
     ctx.stroke();
