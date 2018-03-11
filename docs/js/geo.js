@@ -118,6 +118,6 @@ function stopLocationUpdate(){
   navigator.geolocation.clearWatch(watchID);
 }
 
-function stopTrip() {
-  trackingTrip = false;
+function pauseTrip() {
+  trackingTrip = !trackingTrip;
 }
