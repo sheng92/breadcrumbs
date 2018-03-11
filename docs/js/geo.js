@@ -54,6 +54,7 @@ function draw() {
         ctx.strokeStyle="#009900";
         ctx.lineWidth=5;
         ctx.stroke();
+        ctx.beginPath();
       }
       else{
         ctx.lineTo(xy.x, xy.y);
