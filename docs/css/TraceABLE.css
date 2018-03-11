@@ -80,3 +80,10 @@ button {
     font-size:4vw;
 }
 
+.zoom {
+  float:right;
+  clear:both;
+  min-width:10%;
+  margin-right:20px;
+}
+
