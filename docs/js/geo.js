@@ -51,12 +51,16 @@ function draw() {
         ctx.moveTo(xy.x+3, xy.y);
         ctx.arc(xy.x, xy.y, 3, 0, Math.PI*2, true);
         ctx.moveTo(xy.x, xy.y);
+        ctx.strokeStyle="#009900";
+        ctx.lineWidth=5;
+        ctx.stroke();
       }
       else{
         ctx.lineTo(xy.x, xy.y);
       }
     }
-    ctx.strokeStyle="#ec5d57";
+    ctx.strokeStyle="#8a130f";
+    ctx.lineWidth=5;
     ctx.stroke();
     
     var xy = getXY(canvas.height, canvas.width, currentPos.lat, currentPos.long, currentPos.lat, currentPos.long, zoom);
