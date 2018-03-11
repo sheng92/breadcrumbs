@@ -5,16 +5,13 @@ var geoLoc;
 var currentTrip = [];
 var currentTripSmooth;
 var currentPos = {lat:0, long:0}
-var gn = new GyroNorm();
 
-gn.init().then(function(){
-  gn.start(function(data){
-    currentHeading.degrees = data.do.alpha
-    draw();
-  });
-  }).catch(function(e){
-  // Catch if the DeviceOrientation or DeviceMotion is not supported by the browser or device
-  console.log(e);
+Compass.watch(function (heading) {
+  currentHeading.degrees = heading;
+});
+
+Compass.init(function (method) {
+  console.log('Compass heading by ' + method);
 });
 
 
@@ -71,7 +68,7 @@ function showLocation(position) {
   var latitude = position.coords.latitude * 1000000;
   var longitude = position.coords.longitude * 1000000;
   currentTrip.push({ lat: latitude, long : longitude });
-  currentTripSmooth = simplify(currentTrip, 5, false);
+  currentTripSmooth = simplify(currentTrip, 50, false);
   currentPos = {lat: latitude, long: longitude};
   dLog.insertAdjacentHTML('beforeend', '{"lat":' + latitude + ',"long":' + longitude + "}");
   draw();
