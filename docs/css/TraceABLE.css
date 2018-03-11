@@ -85,6 +85,7 @@ button {
   clear:both;
   min-width:100px;
   margin-right:20px;
+  margin-bottom:2.5%;
   background-color:darkgrey;
   opacity:.5;
 }
